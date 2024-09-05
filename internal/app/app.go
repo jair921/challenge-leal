@@ -15,8 +15,15 @@ func Run(env string) {
 		log.Fatalf("could not load config: %v", err)
 	}
 
+	//Conexión mysql
+	db, err := InitDB(cfg)
+	if err != nil {
+		log.Fatalf("could not connect to database: %v", err)
+	}
+	defer db.Close()
+
 	// Configurar las dependencias
-	deps := &dependencies.Dependencies{}
+	deps := app.SetupDependencies(db)
 
 	// Configurar el router
 	r := routes.NewRouter(deps)

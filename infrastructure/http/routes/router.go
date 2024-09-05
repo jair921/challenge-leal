@@ -2,10 +2,10 @@ package routes
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/jair921/challenge-leal/internal/dependencies"
+	app "github.com/jair921/challenge-leal/internal/dependencies"
 )
 
-func NewRouter(deps *dependencies.Dependencies) *mux.Router {
+func NewRouter(deps *app.Dependencies) *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 
 	//router.HandleFunc("/api/v1/campaigns", controllers.CreateCampaign).Methods("POST")
