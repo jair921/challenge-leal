@@ -1,10 +1,15 @@
 package main
 
 import (
-	"github.com/jair921/challenge-leal/internal/application"
+	"github.com/jair921/challenge-leal/internal/app"
 	"os"
 )
 
 func main() {
-	application.Run(os.Getenv("APP_ENV"))
+	env := os.Getenv("ENV")
+	if env == "" {
+		env = "development"
+	}
+
+	app.Run(env)
 }

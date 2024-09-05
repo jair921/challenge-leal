@@ -1,4 +1,4 @@
-package application
+package app
 
 import (
 	"github.com/spf13/viper"
@@ -18,7 +18,7 @@ type Config struct {
 }
 
 func LoadConfig(env string) (*Config, error) {
-	viper.SetConfigName(env)
+	viper.SetConfigName("config." + env)
 	viper.AddConfigPath("./configs")
 	viper.AutomaticEnv()
 

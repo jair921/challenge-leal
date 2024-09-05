@@ -1,7 +1,9 @@
-package application
+package app
 
 import (
 	"fmt"
+	"github.com/jair921/challenge-leal/infrastructure/http/routes"
+	"github.com/jair921/challenge-leal/internal/dependencies"
 	"log"
 	"net/http"
 )
@@ -14,10 +16,10 @@ func Run(env string) {
 	}
 
 	// Configurar las dependencias
-	deps := Setup(cfg)
+	deps := &dependencies.Dependencies{}
 
 	// Configurar el router
-	r := SetupRouter(deps)
+	r := routes.NewRouter(deps)
 
 	// Arrancar el servidor
 	port := cfg.Server.Port
