@@ -6,5 +6,7 @@ import (
 
 // CommerceRepository define las operaciones de persistencia para los comercios.
 type CommerceRepository interface {
-	GetCommerceByID(id string) (*entities.Commerce, error)
+	Create(commerce *entities.Commerce) error
+	GetByID(id string) (*entities.Commerce, error)
+	List() ([]*entities.Commerce, error)
 }

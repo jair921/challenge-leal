@@ -3,16 +3,16 @@ package app
 import (
 	"database/sql"
 	"github.com/jair921/challenge-leal/internal/adapters/repositories"
-	repositoriesDomain "github.com/jair921/challenge-leal/internal/domain/repositories"
+	"github.com/jair921/challenge-leal/internal/domain/services"
 )
 
 // Dependencies agrupa todas las dependencias de la aplicación
 type Dependencies struct {
-	CampaignRepository    repositoriesDomain.CampaignRepository
-	CommerceRepository    repositoriesDomain.CommerceRepository
-	BranchRepository      repositoriesDomain.BranchRepository
-	TransactionRepository repositoriesDomain.TransactionRepository
-	UserRepository        repositoriesDomain.UserRepository
+	CampaignService    services.CampaignService
+	CommerceService    services.CommerceService
+	BranchService      services.BranchService
+	TransactionService services.TransactionService
+	UserService        services.UserService
 }
 
 // SetupDependencies inicializa y configura las dependencias de la aplicación
@@ -23,11 +23,18 @@ func SetupDependencies(db *sql.DB) *Dependencies {
 	transactionRepo := repositories.NewMySQLTransactionRepository(db)
 	userRepo := repositories.NewMySQLUserRepository(db)
 
+	// Inicializar servicios
+	campaignService := services.NewCampaignService(campaignRepo)
+	commerceService := services.NewCommerceService(commerceRepo)
+	branchService := services.NewBranchService(branchRepo)
+	transactionService := services.NewTransactionService(transactionRepo, campaignRepo, userRepo)
+	userService := services.NewUserService(userRepo)
+
 	return &Dependencies{
-		CampaignRepository:    campaignRepo,
-		CommerceRepository:    commerceRepo,
-		BranchRepository:      branchRepo,
-		TransactionRepository: transactionRepo,
-		UserRepository:        userRepo,
+		CampaignService:    campaignService,
+		CommerceService:    commerceService,
+		BranchService:      branchService,
+		TransactionService: transactionService,
+		UserService:        userService,
 	}
 }

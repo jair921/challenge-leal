@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"github.com/jair921/challenge-leal/internal/domain/entities"
 	"github.com/jair921/challenge-leal/internal/domain/repositories"
+	"strconv"
 )
 
 type MySQLBranchRepository struct {
@@ -17,8 +18,20 @@ func NewMySQLBranchRepository(db *sql.DB) repositories.BranchRepository {
 
 // Create inserta una nueva sucursal en la base de datos
 func (r *MySQLBranchRepository) Create(branch *entities.Branch) error {
-	query := "INSERT INTO branches (id, commerce_id, name, address) VALUES (?, ?, ?, ?)"
-	_, err := r.db.Exec(query, branch.ID, branch.CommerceID, branch.Name, branch.Address)
+	query := "INSERT INTO branches (commerce_id, name, address) VALUES (?, ?, ?)"
+	result, err := r.db.Exec(query, branch.CommerceID, branch.Name, branch.Address)
+
+	if err != nil {
+		return err
+	}
+
+	id, err := result.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	branch.ID = strconv.Itoa(int(id))
+
 	return err
 }
 

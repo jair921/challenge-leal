@@ -6,6 +6,6 @@ import (
 
 // TransactionRepository define las operaciones de persistencia para las transacciones.
 type TransactionRepository interface {
-	AccumulatePoints(transaction *entities.Transaction) error
-	GetTransactionsByUser(userID string) ([]*entities.Transaction, error)
+	Create(transaction *entities.Transaction) error
+	GetByUserID(userID string) ([]*entities.Transaction, error)
 }
