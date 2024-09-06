@@ -1,5 +1,5 @@
 server:
-  port: "8080"
+  port: "8082"
 
 database:
   dsn: "root:@tcp(localhost:3306)/lealcoins?charset=utf8&parseTime=True&loc=Local"
